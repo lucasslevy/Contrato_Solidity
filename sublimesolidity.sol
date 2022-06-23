@@ -25,10 +25,7 @@ contract Bimestre {
     }
 
     function fullName() public view returns (string memory) {
-        string memory nombreFull = getNombre();
-        string memory apellidoFull = getApellido();
-        string memory nombreCompleto = string.concat(nombreFull, " ", apellidoFull);
-        return nombreCompleto;
+        return string(bytes.concat(bytes(_nombre), " ", bytes(_apellido)));
     }
 
     function getCurso() public view returns (string memory) {
@@ -39,7 +36,7 @@ contract Bimestre {
         require(msg.sender == _docente, "Solo el docente designado puede acceder a las notas");
         
         if (notas_materias[_materia] == 0){
-            _array.push(_materia);
+            _arrayMaterias.push(_materia);
         }
         notas_materias[_materia] = _nota;
         
@@ -62,7 +59,7 @@ contract Bimestre {
     function promedio () public view returns (uint) {
         uint notasTotales;
         uint i;
-        for(i = 0; i <= _arrayNotas.length; i++) {
+        for(i = 0; i <= _arrayMaterias.length; i++) {
             notasTotales += notas_materias[_arrayMaterias[i]];
         }
             
